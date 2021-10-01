@@ -9,7 +9,8 @@ class Model:
         self.renWin = vtk.vtkRenderWindow()
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
-        self.x= []
+        self.actor = self.stlToActor("asteroidLow.stl")
+        self.x = []
         self.y = []
 
     def stlToActor(self, filename):
@@ -43,8 +44,7 @@ class Model:
         self.renWin.SetWindowName('ReadSTL')
 
         # Assign actor to the renderer
-        actor = self.stlToActor("asteroidLow.stl")
-        self.ren.AddActor(actor)
+        self.ren.AddActor(self.actor)
         self.ren.SetBackground(self.colors.GetColor3d('Black'))
 
         # Add an external light ("The sun")
@@ -55,23 +55,12 @@ class Model:
 
     def generateLightShots(self, count):
         for i in range(count):
-            self.roll()
+            self.roll(0, 0, 1)
             self.screenshot(i)
             self.renWin.Render()
 
-    def roll(self):
-        # Get the current camera
-        camera = self.ren.GetActiveCamera()
-
-        # Create a rotation
-        transform = vtk.vtkTransform()
-        transform.Identity()
-        transform.RotateWXYZ(1, 1, 1, 1)
-
-        # Apply the rotation
-        camera.ApplyTransform(transform)
-        camera.OrthogonalizeViewUp()
-        self.ren.ResetCameraClippingRange()
+    def roll(self, x, y, z):
+        self.actor.RotateWXYZ(1, x, y, z)
 
     def screenshot(self, count, filename=None):
         # Create image filter
@@ -82,7 +71,7 @@ class Model:
         # Handle default file name
         if filename is None:
             filename = 'screenshot'
-        filename = filename + '%d.png' % count
+        filename = filename + '.png'
 
         # Generate and write the image
         writer = vtk.vtkPNGWriter()
@@ -90,12 +79,13 @@ class Model:
         writer.SetInputData(w2if.GetOutput())
         writer.Write()
 
-        print(" ")
+        # print(" ")
         image = Image.open(filename)
-        print("%s\t%s" % (filename, calculate_brightness(image)))
-        y.append(calculate_brightness(image))
-        x.append(screenshot_count)
+        # print("%s\t%s" % (filename, self.calculate_brightness(image)))
+        self.y.append(self.calculate_brightness(image))
+        self.x.append(count)
 
+    @staticmethod
     def calculate_brightness(image):
         greyscale_image = image.convert('L')
         histogram = greyscale_image.histogram()
@@ -111,4 +101,6 @@ class Model:
 
 scene = Model()
 scene.render()
-scene.generateLightShots(10)
+scene.generateLightShots(360*5)
+plt.plot(scene.x, scene.y)
+plt.show()
