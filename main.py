@@ -1,6 +1,7 @@
 import time
 import vtk
-
+from PIL import Image
+import matplotlib.pyplot as plt
 
 class Model:
     def __init__(self):
@@ -8,6 +9,8 @@ class Model:
         self.renWin = vtk.vtkRenderWindow()
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
+        self.x= []
+        self.y = []
 
     def stlToActor(self, filename):
         # Create STL reader
@@ -86,6 +89,24 @@ class Model:
         writer.SetFileName(filename)
         writer.SetInputData(w2if.GetOutput())
         writer.Write()
+
+        print(" ")
+        image = Image.open(filename)
+        print("%s\t%s" % (filename, calculate_brightness(image)))
+        y.append(calculate_brightness(image))
+        x.append(screenshot_count)
+
+    def calculate_brightness(image):
+        greyscale_image = image.convert('L')
+        histogram = greyscale_image.histogram()
+        pixels = sum(histogram)
+        brightness = scale = len(histogram)
+
+        for index in range(0, scale):
+            ratio = histogram[index] / pixels
+            brightness += ratio * (-scale + index)
+
+        return 1 if brightness == 255 else brightness / scale
 
 
 scene = Model()
