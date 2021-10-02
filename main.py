@@ -2,6 +2,7 @@ import time
 import vtk
 from PIL import Image
 import matplotlib.pyplot as plt
+import os
 
 class Model:
     def __init__(self):
@@ -84,6 +85,12 @@ class Model:
         # print("%s\t%s" % (filename, self.calculate_brightness(image)))
         self.y.append(self.calculate_brightness(image))
         self.x.append(count)
+        
+        name = 'Face'+ str(count) + '.png'
+        if count < 361:
+            if count%36 == 0:
+                print("works")
+                os.replace(filename,name)
 
     @staticmethod
     def calculate_brightness(image):
