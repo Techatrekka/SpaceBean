@@ -112,6 +112,7 @@ class Model:
             if os.path.isfile("plot.png"):
                 os.replace("plot.png", "oldplot.png")
             plt.savefig("plot.png")
+            plt.clf()
             self.isRunning = 0
 
     def roll(self, x, y, z):

@@ -1,6 +1,7 @@
 # import system module
 import sys
 import vtk
+import math
 
 # import some PyQt5 modules
 from PyQt5.QtWidgets import QApplication, QDialog, QFileDialog, QMainWindow
@@ -49,6 +50,12 @@ class simulation(QMainWindow):
         self.ui.yObjectScale_SpinBox.valueChanged.connect(self.updateScale)
         self.ui.zObjectScale_SpinBox.valueChanged.connect(self.updateScale)
 
+        self.ui.xObjectRotation_SpinBox.setValue(1)
+
+        self.ui.xObjectScale_SpinBox.setValue(1)
+        self.ui.yObjectScale_SpinBox.setValue(1)
+        self.ui.zObjectScale_SpinBox.setValue(1)
+
         self.ui.earthDistance_Slider.valueChanged.connect(self.updateEarthControlsSlider)
         self.ui.earthDistance_ComboBox.valueChanged.connect(self.updateEarthControlsCombo)
         self.ui.sunDistance_Slider.valueChanged.connect(self.updateSunDistanceSlider)
@@ -68,16 +75,16 @@ class simulation(QMainWindow):
         objectRotateX = self.ui.xObjectRotation_SpinBox.value()
         objectRotateY = self.ui.yObjectRotation_SpinBox.value()
         objectRotateZ = self.ui.zObjectRotation_SpinBox.value()
-        objectRotations = [objectRotateX, objectRotateY, objectRotateZ]
-        self.scene.start(360, objectRotations)
         rotations = self.ui.rotationNo_SpinBox.value()
-        if ((objectRotateX != 0) & (objectRotateY != 0) & (objectRotateY != 0)):
+        objectRotations = [0, 0, 0]
+        if not ((objectRotateX == 0) and (objectRotateY == 0) and (objectRotateZ == 0)):
             objectRotateMagnitude = math.sqrt(objectRotateX ** 2 + objectRotateY ** 2 + objectRotateZ ** 2)
             Xnew = objectRotateX / objectRotateMagnitude
             Ynew = objectRotateY / objectRotateMagnitude
             Znew = objectRotateZ / objectRotateMagnitude
             objectRotations = [Xnew, Ynew, Znew]
         self.scene.start(360 * rotations, objectRotations)
+        self.updateGraphs()
         self.resetScene()
 
     def updateGraphs(self):
