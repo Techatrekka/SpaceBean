@@ -49,6 +49,15 @@ class simulation(QMainWindow):
         self.ui.yObjectScale_SpinBox.valueChanged.connect(self.updateScale)
         self.ui.zObjectScale_SpinBox.valueChanged.connect(self.updateScale)
 
+        self.ui.earthDistance_Slider.valueChanged.connect(self.updateEarthControlsSlider)
+        self.ui.earthDistance_ComboBox.valueChanged.connect(self.updateEarthControlsCombo)
+        self.ui.sunDistance_Slider.valueChanged.connect(self.updateSunDistanceSlider)
+        self.ui.sunDistance_SpinBox.valueChanged.connect(self.updateSunDistanceCombo)
+        self.ui.xSunRotation_Slider.valueChanged.connect(self.updateSunRotationSlider)
+        self.ui.xSunRotation_SpinBox.valueChanged.connect(self.updateSunRotationCombo)
+        self.ui.xSunRotation_Slider.setMaximum(360)
+        self.ui.xSunRotation_Slider.setMinimum(1)
+
         self.show()
         self.iren.Initialize()
         self.iren.Disable()
@@ -75,8 +84,29 @@ class simulation(QMainWindow):
         self.scene.updateScale(objectScale)
         self.vtkWidget.GetRenderWindow().Render()
 
+    def updateEarthControlsCombo(self):
+        self.ui.earthDistance_Slider.setValue(self.ui.earthDistance_ComboBox.value())
+        self.scene.updateEarth(self.ui.earthDistance_Slider.value())
 
+    def updateEarthControlsSlider(self):
+        self.ui.earthDistance_ComboBox.setValue(self.ui.earthDistance_Slider.value())
+        self.scene.updateEarth(self.ui.earthDistance_Slider.value())
 
+    def updateSunDistanceCombo(self):
+        self.ui.sunDistance_Slider.setValue(self.ui.sunDistance_SpinBox.value())
+        self.scene.updateSunDistance(self.ui.sunDistance_SpinBox.value())
+
+    def updateSunDistanceSlider(self):
+        self.ui.sunDistance_SpinBox.setValue(self.ui.sunDistance_Slider.value())
+        self.scene.updateSunDistance(self.ui.sunDistance_SpinBox.value())
+
+    def updateSunRotationCombo(self):
+        self.ui.xSunRotation_Slider.setValue(self.ui.xSunRotation_Slider.value())
+        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+
+    def updateSunRotationSlider(self):
+        self.ui.xSunRotation_SpinBox.setValue(self.ui.xSunRotation_Slider.value())
+        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
 
 # This class opens the Setup Screen where users can change their save directory
 class mainMenu(QWidget):

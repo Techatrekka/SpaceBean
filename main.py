@@ -68,6 +68,15 @@ class Model:
         # Apply new rotations
         self.actor.SetUserTransform(transform)
 
+    def updateEarth(self, input):
+        pass
+
+    def updateSunRotation(self, input):
+        pass
+
+    def updateSunDistance(self, input):
+        pass
+
     def resetActor(self):
         self.ren.RemoveActor(self.actor)
         self.actor = self.fileToActor(self.filename)
