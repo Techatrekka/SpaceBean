@@ -13,12 +13,16 @@ class Model:
         self.colors = vtk.vtkNamedColors()
         self.scale = 2
         self.actor = self.fileToActor("bennuAsteroid.stl")
+
+        self.sun = self.createLightSource(10, 10, 10)
+        self.updateCameraPosition(-7, 7, 7)
+
         self.x = []
         self.y = []
 
     def fileToActor(self, filename):
         # Create file reader
-        if ".stl" in filename:
+        if (".stl" in filename) or (".STL" in filename):
             reader = vtk.vtkSTLReader()
         else:
             reader = vtk.vtkOBJReader()
@@ -36,7 +40,7 @@ class Model:
         # Set actors default transform
         transform = vtk.vtkTransform()
         transform.PostMultiply()
-        transform.Scale(self.scale,self.scale,self.scale)
+        transform.Scale(self.scale, self.scale, self.scale)
         actor.SetUserTransform(transform)
 
         # Set the actor colour
@@ -53,6 +57,14 @@ class Model:
         light.SetDiffuseColor(1, 1, 1)
         return light
 
+    def updateLightPosition(self, x, y, z):
+        self.sun.SetPosition(x, y, z)
+
+    def updateCameraPosition(self, x, y, z):
+        camera = self.ren.GetActiveCamera()
+        camera.SetFocalPoint(0, 0, 0)
+        camera.SetPosition(-5, 5, 5)
+
     def render(self):
         # Create a rendering window and renderer
         self.renWin.AddRenderer(self.ren)
@@ -62,13 +74,8 @@ class Model:
         self.ren.AddActor(self.actor)
         self.ren.SetBackground(self.colors.GetColor3d('Black'))
 
-        # Configure Camera
-        camera = self.ren.GetActiveCamera()
-        camera.SetFocalPoint(0, 0, 0)
-        camera.SetPosition(-5, 5, 5)
-
         # Add an external light ("The sun")
-        self.ren.AddLight(self.createLightSource(10, 10, 10))
+        self.ren.AddLight(self.sun)
 
         # Render scene
         self.renWin.Render()
@@ -131,7 +138,5 @@ class Model:
         return 1 if brightness == 255 else brightness / scale
 
 
-scene = Model()
-scene.render()
-scene.start(360, 2, 1, 3)
+
 
