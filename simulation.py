@@ -20,6 +20,7 @@ class Ui_MainWindow(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
         MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMinimumSize(QtCore.QSize(1075, 740))
         MainWindow.setMaximumSize(QtCore.QSize(1075, 740))
         MainWindow.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0.388, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.995025 rgba(0, 0, 120, 255));")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
@@ -42,7 +43,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.currentLight_Label.sizePolicy().hasHeightForWidth())
         self.currentLight_Label.setSizePolicy(sizePolicy)
         self.currentLight_Label.setMinimumSize(QtCore.QSize(300, 250))
-        self.currentLight_Label.setMaximumSize(QtCore.QSize(300, 300))
+        self.currentLight_Label.setMaximumSize(QtCore.QSize(15555555, 1555555))
         self.currentLight_Label.setStyleSheet("border: 1px solid;\n"
 "border-color: rgb(0, 0, 0);\n"
 "background-color: rgba(230, 230, 230, 0);")
