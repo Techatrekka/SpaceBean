@@ -70,7 +70,22 @@ class simulation(QMainWindow):
         objectRotateZ = self.ui.zObjectRotation_SpinBox.value()
         objectRotations = [objectRotateX, objectRotateY, objectRotateZ]
         self.scene.start(360, objectRotations)
+        rotations = self.ui.rotationNo_SpinBox.value()
+        if ((objectRotateX != 0) & (objectRotateY != 0) & (objectRotateY != 0)):
+            objectRotateMagnitude = math.sqrt(objectRotateX ** 2 + objectRotateY ** 2 + objectRotateZ ** 2)
+            Xnew = objectRotateX / objectRotateMagnitude
+            Ynew = objectRotateY / objectRotateMagnitude
+            Znew = objectRotateZ / objectRotateMagnitude
+            objectRotations = [Xnew, Ynew, Znew]
+        self.scene.start(360 * rotations, objectRotations)
         self.resetScene()
+
+    def updateGraphs(self):
+        pixmap = QtGui.QPixmap("plot.png")
+        self.ui.currentLight_Label.setPixmap(pixmap)
+
+        pixmap = QtGui.QPixmap("oldplot.png")
+        self.ui.previousLight_Label.setPixmap(pixmap)
 
     def resetScene(self):
         self.scene.resetActor()
