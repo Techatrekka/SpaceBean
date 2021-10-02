@@ -88,16 +88,16 @@ class Model:
         # Apply new rotations
         self.actor.SetUserTransform(rotationTransform)
 
-    def screenshot(self, count, filename=None):
+    def screenshot(self, count):
         # Create image filter
         w2if = vtk.vtkWindowToImageFilter()
         w2if.SetInput(self.renWin)
         w2if.Update()
 
-        # Handle default file name
-        if filename is None:
-            filename = 'screenshot'
-        filename = filename + '.png'
+        filename = 'screenshot.png'
+        if count < 361:
+            if count % 36 == 0:
+                filename = 'Face' + str(int(count / 36)) + ".png"
 
         # Generate and write the image
         writer = vtk.vtkPNGWriter()
