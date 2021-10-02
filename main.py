@@ -11,6 +11,7 @@ class Model:
         self.renWin = vtk.vtkRenderWindow()
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
+        self.scale = 2
         self.actor = self.fileToActor("bennuAsteroid.stl")
         self.x = []
         self.y = []
@@ -35,6 +36,7 @@ class Model:
         # Set actors default transform
         transform = vtk.vtkTransform()
         transform.PostMultiply()
+        transform.Scale(self.scale,self.scale,self.scale)
         actor.SetUserTransform(transform)
 
         # Set the actor colour
