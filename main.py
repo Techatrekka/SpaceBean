@@ -62,6 +62,11 @@ class Model:
         self.ren.AddActor(self.actor)
         self.ren.SetBackground(self.colors.GetColor3d('Black'))
 
+        # Configure Camera
+        camera = self.ren.GetActiveCamera()
+        camera.SetFocalPoint(0, 0, 0)
+        camera.SetPosition(-5, 5, 5)
+
         # Add an external light ("The sun")
         self.ren.AddLight(self.createLightSource(10, 10, 10))
 
