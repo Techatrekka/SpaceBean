@@ -12,7 +12,7 @@ class Model:
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
         self.scale = 2
-        self.actor = self.fileToActor("bennuAsteroid.stl")
+        self.actor = self.fileToActor("bennuAsteroid.STL")
 
         self.sun = self.createLightSource(10, 10, 10)
         self.updateCameraPosition(-7, 7, 7)
@@ -139,4 +139,6 @@ class Model:
 
 
 
-
+scene = Model()
+scene.render()
+scene.start(360, 2, 1, 3)
