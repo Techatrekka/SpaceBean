@@ -6,8 +6,9 @@ import os
 
 
 class Model:
-    def __init__(self, ren):
+    def __init__(self, ren, renWin):
         self.ren = ren
+        self.renWin = renWin
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
         self.scale = 2
