@@ -1,5 +1,4 @@
 # import system module
-import math
 import sys
 import vtk
 
@@ -69,13 +68,8 @@ class simulation(QMainWindow):
         objectRotateX = self.ui.xObjectRotation_SpinBox.value()
         objectRotateY = self.ui.yObjectRotation_SpinBox.value()
         objectRotateZ = self.ui.zObjectRotation_SpinBox.value()
-        rotations = self.ui.rotationNo_SpinBox.value()
-        objectRotateMagnitude = math.sqrt(objectRotateX**2+objectRotateY**2+objectRotateZ**2)
-        Xnew = objectRotateX/objectRotateMagnitude
-        Ynew = objectRotateY/objectRotateMagnitude
-        Znew = objectRotateZ/objectRotateMagnitude
-        objectRotations = [Xnew, Ynew ,Znew ]
-        self.scene.start(360*rotations, objectRotations)
+        objectRotations = [objectRotateX, objectRotateY, objectRotateZ]
+        self.scene.start(360, objectRotations)
         self.resetScene()
 
     def resetScene(self):
