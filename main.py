@@ -13,6 +13,7 @@ class Model:
         self.colors = vtk.vtkNamedColors()
         self.scale = 2
         self.actor = self.fileToActor("bennuAsteroid.STL")
+        self.isRunning = 0
 
         self.sun = self.createLightSource(10, 10, 10)
         self.updateCameraPosition(-7, 7, 7)
@@ -63,7 +64,7 @@ class Model:
     def updateCameraPosition(self, x, y, z):
         camera = self.ren.GetActiveCamera()
         camera.SetFocalPoint(0, 0, 0)
-        camera.SetPosition(-5, 5, 5)
+        camera.SetPosition(x, y, z)
 
     def render(self):
         # Assign actor to the renderer
@@ -74,13 +75,18 @@ class Model:
         self.ren.AddLight(self.sun)
 
     def start(self, num_iterations, x, y, z):
-        for i in range(num_iterations):
-            self.roll(x, y, z)
-            self.renWin.Render()
-            self.screenshot(i)
+        if self.isRunning == 0:
+            self.x = []
+            self.y = []
+            self.isRunning = 1
+            for i in range(num_iterations):
+                self.roll(x, y, z)
+                self.renWin.Render()
+                self.screenshot(i)
 
-        plt.plot(self.x, self.y)
-        plt.show()
+            plt.plot(self.x, self.y)
+            plt.show()
+            self.isRunning = 0
 
     def roll(self, x, y, z):
         # Get current rotation rotation
