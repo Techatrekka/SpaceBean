@@ -11,7 +11,6 @@ class Model:
         self.renWin = renWin
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
-        self.scale = 2
         self.actor = self.fileToActor("bennuAsteroid.STL")
         self.isRunning = 0
 
@@ -41,7 +40,6 @@ class Model:
         # Set actors default transform
         transform = vtk.vtkTransform()
         transform.PostMultiply()
-        transform.Scale(self.scale, self.scale, self.scale)
         actor.SetUserTransform(transform)
 
         # Set the actor colour
@@ -57,6 +55,18 @@ class Model:
         light.SetPosition(x, y, z)
         light.SetDiffuseColor(1, 1, 1)
         return light
+
+    def updateScale(self, objectScale):
+        transform = self.actor.GetUserTransform()
+        transform.PostMultiply()
+
+        # Adjust scale
+        oldObjectScale = transform.GetScale()
+        transform.Scale(objectScale[0] / oldObjectScale[0], objectScale[1] / oldObjectScale[1], objectScale[2] / oldObjectScale[2])
+
+        # Apply new rotations
+        self.actor.SetUserTransform(transform)
+
 
     def updateLightPosition(self, x, y, z):
         self.sun.SetPosition(x, y, z)
@@ -74,7 +84,7 @@ class Model:
         # Add an external light ("The sun")
         self.ren.AddLight(self.sun)
 
-    def start(self, num_iterations, objectRotations, objectScale):
+    def start(self, num_iterations, objectRotations):
         if self.isRunning == 0:
             self.x = []
             self.y = []
