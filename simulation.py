@@ -14,7 +14,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1097, 917)
+        MainWindow.resize(1075, 740)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(MainWindow.sizePolicy().hasHeightForWidth())
+        MainWindow.setSizePolicy(sizePolicy)
+        MainWindow.setMaximumSize(QtCore.QSize(1075, 740))
         MainWindow.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0.388, y1:1, x2:1, y2:0, stop:0 rgba(0, 0, 0, 255), stop:0.995025 rgba(0, 0, 120, 255));")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -29,17 +35,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout.addLayout(self.vtkMainLayout)
         self.lightGraphLayout = QtWidgets.QVBoxLayout()
         self.lightGraphLayout.setObjectName("lightGraphLayout")
-        self.label_13 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_13.setFont(font)
-        self.label_13.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgba(255, 255, 255, 0);")
-        self.label_13.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_13.setObjectName("label_13")
-        self.lightGraphLayout.addWidget(self.label_13)
         self.currentLight_Label = QtWidgets.QLabel(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -47,46 +42,31 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.currentLight_Label.sizePolicy().hasHeightForWidth())
         self.currentLight_Label.setSizePolicy(sizePolicy)
         self.currentLight_Label.setMinimumSize(QtCore.QSize(300, 250))
-        self.currentLight_Label.setMaximumSize(QtCore.QSize(300, 250))
+        self.currentLight_Label.setMaximumSize(QtCore.QSize(300, 300))
         self.currentLight_Label.setStyleSheet("border: 1px solid;\n"
 "border-color: rgb(0, 0, 0);\n"
-"background-color: rgba(230, 230, 230, 255);")
+"background-color: rgba(230, 230, 230, 0);")
         self.currentLight_Label.setText("")
         self.currentLight_Label.setScaledContents(True)
         self.currentLight_Label.setAlignment(QtCore.Qt.AlignCenter)
         self.currentLight_Label.setObjectName("currentLight_Label")
         self.lightGraphLayout.addWidget(self.currentLight_Label)
-        self.label_7 = QtWidgets.QLabel(self.centralwidget)
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.label_7.setFont(font)
-        self.label_7.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgba(255, 255, 255, 0);")
-        self.label_7.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_7.setObjectName("label_7")
-        self.lightGraphLayout.addWidget(self.label_7)
-        self.previousLight_Label = QtWidgets.QLabel(self.centralwidget)
-        self.previousLight_Label.setMinimumSize(QtCore.QSize(300, 250))
-        self.previousLight_Label.setMaximumSize(QtCore.QSize(300, 250))
-        self.previousLight_Label.setStyleSheet("border: 1px solid;\n"
-"border-color: rgb(0, 0, 0);\n"
-"background-color: rgba(230, 230, 230, 255);")
-        self.previousLight_Label.setText("")
-        self.previousLight_Label.setScaledContents(True)
-        self.previousLight_Label.setAlignment(QtCore.Qt.AlignCenter)
-        self.previousLight_Label.setObjectName("previousLight_Label")
-        self.lightGraphLayout.addWidget(self.previousLight_Label)
         self.horizontalLayout.addLayout(self.lightGraphLayout)
         self.verticalLayout.addLayout(self.horizontalLayout)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout()
         self.verticalLayout_6.setObjectName("verticalLayout_6")
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_6.addItem(spacerItem)
         self.topDownImage_Label = QtWidgets.QLabel(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.topDownImage_Label.sizePolicy().hasHeightForWidth())
+        self.topDownImage_Label.setSizePolicy(sizePolicy)
         self.topDownImage_Label.setMinimumSize(QtCore.QSize(250, 250))
-        self.topDownImage_Label.setMaximumSize(QtCore.QSize(250, 250))
+        self.topDownImage_Label.setMaximumSize(QtCore.QSize(300, 300))
         self.topDownImage_Label.setStyleSheet("border: 1px solid;\n"
 "border-color: rgb(0, 0, 0);\n"
 "background-color: rgba(230, 230, 230, 255);")
@@ -94,24 +74,11 @@ class Ui_MainWindow(object):
         self.topDownImage_Label.setScaledContents(True)
         self.topDownImage_Label.setObjectName("topDownImage_Label")
         self.verticalLayout_6.addWidget(self.topDownImage_Label)
-        self.preview_Button = QtWidgets.QPushButton(self.centralwidget)
-        self.preview_Button.setStyleSheet("background-color: rgb(185, 185, 185);\n"
-"    border-style: outset;\n"
-"    border-width: 2px;\n"
-"    border-radius: 10px;\n"
-"    border-color: rgb(143, 143, 143);\n"
-"    font: bold 14px;\n"
-"    min-width: 10em;\n"
-"    padding: 6px;\n"
-"\n"
-"color: rgb(255, 255, 255);")
-        self.preview_Button.setObjectName("preview_Button")
-        self.verticalLayout_6.addWidget(self.preview_Button)
         self.horizontalLayout_2.addLayout(self.verticalLayout_6)
         self.verticalLayout_4 = QtWidgets.QVBoxLayout()
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_4.addItem(spacerItem)
+        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_4.addItem(spacerItem1)
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
         self.label_9.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgba(255, 255, 255, 0);")
@@ -222,8 +189,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.setObjectName("horizontalLayout_3")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout()
         self.verticalLayout_3.setObjectName("verticalLayout_3")
-        spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_3.addItem(spacerItem1)
+        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_3.addItem(spacerItem2)
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgba(255, 255, 255, 0);")
@@ -291,8 +258,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addLayout(self.horizontalLayout_3)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
         self.verticalLayout_2.setObjectName("verticalLayout_2")
-        spacerItem2 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_2.addItem(spacerItem2)
+        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem3)
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgba(255, 255, 255, 0);")
@@ -326,8 +293,8 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addLayout(self.verticalLayout_2)
         self.verticalLayout_5 = QtWidgets.QVBoxLayout()
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        spacerItem3 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
-        self.verticalLayout_5.addItem(spacerItem3)
+        spacerItem4 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_5.addItem(spacerItem4)
         self.label_16 = QtWidgets.QLabel(self.centralwidget)
         self.label_16.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgba(255, 255, 255, 0);")
@@ -367,9 +334,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label_13.setText(_translate("MainWindow", "New Graph"))
-        self.label_7.setText(_translate("MainWindow", "Old Graph"))
-        self.preview_Button.setText(_translate("MainWindow", "Preview"))
         self.label_9.setText(_translate("MainWindow", "Object Controls"))
         self.label_10.setText(_translate("MainWindow", "Rotation Weights"))
         self.label_19.setText(_translate("MainWindow", "X"))
