@@ -74,13 +74,13 @@ class Model:
         # Add an external light ("The sun")
         self.ren.AddLight(self.sun)
 
-    def start(self, num_iterations, x, y, z):
+    def start(self, num_iterations, objectRotations, objectScale):
         if self.isRunning == 0:
             self.x = []
             self.y = []
             self.isRunning = 1
             for i in range(num_iterations):
-                self.roll(x, y, z)
+                self.roll(objectRotations[0], objectRotations[1], objectRotations[2])
                 self.renWin.Render()
                 self.screenshot(i)
 

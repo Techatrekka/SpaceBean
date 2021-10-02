@@ -41,16 +41,26 @@ class simulation(QMainWindow):
         self.vtkWidget.GetRenderWindow().AddRenderer(self.ren)
         self.iren = self.vtkWidget.GetRenderWindow().GetInteractor()
 
-        scene = Model(self.ren, self.vtkWidget.GetRenderWindow())
-        scene.render()
-        self.ui.startSimulation_Button.clicked.connect(lambda: scene.start(360, 6, 8, 3))
+        self.scene = Model(self.ren, self.vtkWidget.GetRenderWindow())
+        self.scene.render()
+        self.ui.startSimulation_Button.clicked.connect(self.startScene)
 
         self.show()
         self.iren.Initialize()
         self.iren.Disable()
-
+        self.ui.zScale_SpinBox
 
         # List of products the user can select from
+    def startScene(self):
+        scaleX = self.ui.xScale_SpinBox 
+        scaleY = self.ui.yScale_SpinBox
+        scaleZ = self.ui.zScale_SpinBox
+        objectRotateX = 0
+        objectRotateY = 0
+        objectRotateZ = 0
+        objectRotations = [objectRotateX,objectRotateY,objectRotateZ]
+        objectScale = [scaleX,scaleY,scaleZ]
+        self.scene.start(360, objectRotations, objectScale)
 
 
 
