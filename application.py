@@ -9,7 +9,7 @@ from PyQt5.QtGui import QImage, QWindow
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 
-from vtk.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
+from vtkmodules.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
 from main import *
 from mainMenu import *
@@ -33,6 +33,7 @@ class simulation(QMainWindow):
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.vtkWidget = QVTKRenderWindowInteractor(self)
         self.ui.vtkMainLayout.addWidget(self.vtkWidget)
 
@@ -40,14 +41,10 @@ class simulation(QMainWindow):
         self.vtkWidget.GetRenderWindow().AddRenderer(self.ren)
         self.iren = self.vtkWidget.GetRenderWindow().GetInteractor()
 
-
-##########################################################################################################
-        #This part can be deleted to put in our VTK code 
-
-        scene = Model(self.ren)
+        scene = Model(self.ren, self.vtkWidget.GetRenderWindow())
         scene.render()
+        self.ui.startSimulation_Button.clicked.connect(lambda: scene.start(360, 6, 8, 3))
 
-########################################################################################################
         self.show()
         self.iren.Initialize()
         self.iren.Disable()
