@@ -4,19 +4,24 @@ from PIL import Image
 import matplotlib.pyplot as plt
 import os
 
+
 class Model:
     def __init__(self):
         self.ren = vtk.vtkRenderer()
         self.renWin = vtk.vtkRenderWindow()
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
-        self.actor = self.stlToActor("asteroidLow.stl")
+        self.actor = self.fileToActor("bennuAsteroid.stl")
         self.x = []
         self.y = []
 
-    def stlToActor(self, filename):
-        # Create STL reader
-        reader = vtk.vtkSTLReader()
+    def fileToActor(self, filename):
+        # Create file reader
+        if ".stl" in filename:
+            reader = vtk.vtkSTLReader()
+        else:
+            reader = vtk.vtkOBJReader()
+
         reader.SetFileName(filename)
 
         # Create map to convert STL to Polydata
@@ -26,8 +31,15 @@ class Model:
         # Use above map to convert STL to an Actor
         actor = vtk.vtkActor()
         actor.SetMapper(mapper)
+
+        # Set actors default transform
+        transform = vtk.vtkTransform()
+        transform.PostMultiply()
+        actor.SetUserTransform(transform)
+
         # Set the actor colour
         actor.GetProperty().SetDiffuseColor(self.colors.GetColor3d('Light_Grey'))
+        actor.SetOrigin(0, 0, 0)
 
         return actor
 
@@ -49,19 +61,32 @@ class Model:
         self.ren.SetBackground(self.colors.GetColor3d('Black'))
 
         # Add an external light ("The sun")
-        self.ren.AddLight(self.createLightSource(5, -5, 5))
+        self.ren.AddLight(self.createLightSource(10, 10, 10))
 
         # Render scene
         self.renWin.Render()
 
-    def generateLightShots(self, count):
-        for i in range(count):
-            self.roll(0, 0, 1)
-            self.screenshot(i)
+    def start(self, num_iterations, x, y, z):
+        for i in range(num_iterations):
+            self.roll(x, y, z)
             self.renWin.Render()
+            self.screenshot(i)
+
+        plt.plot(self.x, self.y)
+        plt.show()
 
     def roll(self, x, y, z):
-        self.actor.RotateWXYZ(1, x, y, z)
+        # Get current rotation rotation
+        rotationTransform = self.actor.GetUserTransform()
+        rotationTransform.PostMultiply()
+
+        # Add new rotations
+        rotationTransform.RotateX(x)
+        rotationTransform.RotateY(y)
+        rotationTransform.RotateZ(z)
+
+        # Apply new rotations
+        self.actor.SetUserTransform(rotationTransform)
 
     def screenshot(self, count, filename=None):
         # Create image filter
@@ -80,17 +105,15 @@ class Model:
         writer.SetInputData(w2if.GetOutput())
         writer.Write()
 
-        # print(" ")
         image = Image.open(filename)
-        # print("%s\t%s" % (filename, self.calculate_brightness(image)))
         self.y.append(self.calculate_brightness(image))
         self.x.append(count)
-        
-        name = 'Face'+ str(count) + '.png'
+
+        name = 'Face' + str(count) + '.png'
         if count < 361:
-            if count%36 == 0:
+            if count % 36 == 0:
                 print("works")
-                os.replace(filename,name)
+                os.replace(filename, name)
 
     @staticmethod
     def calculate_brightness(image):
@@ -108,6 +131,5 @@ class Model:
 
 scene = Model()
 scene.render()
-scene.generateLightShots(360*5)
-plt.plot(scene.x, scene.y)
-plt.show()
+scene.start(360, 8, 1, 3)
+
