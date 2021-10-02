@@ -214,7 +214,7 @@ class Ui_MainWindow(object):
         self.xSunRotation_Slider.setSizePolicy(sizePolicy)
         self.xSunRotation_Slider.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgba(255, 255, 255, 0);")
-        self.xSunRotation_Slider.setMaximum(360)
+        self.xSunRotation_Slider.setMaximum(359)
         self.xSunRotation_Slider.setSingleStep(10)
         self.xSunRotation_Slider.setOrientation(QtCore.Qt.Horizontal)
         self.xSunRotation_Slider.setObjectName("xSunRotation_Slider")
@@ -222,7 +222,7 @@ class Ui_MainWindow(object):
         self.xSunRotation_SpinBox = QtWidgets.QSpinBox(self.centralwidget)
         self.xSunRotation_SpinBox.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgba(255, 255, 255, 255);")
-        self.xSunRotation_SpinBox.setMaximum(360)
+        self.xSunRotation_SpinBox.setMaximum(359)
         self.xSunRotation_SpinBox.setObjectName("xSunRotation_SpinBox")
         self.horizontalLayout_7.addWidget(self.xSunRotation_SpinBox)
         self.verticalLayout_3.addLayout(self.horizontalLayout_7)
@@ -244,8 +244,9 @@ class Ui_MainWindow(object):
         self.sunDistance_Slider.setSizePolicy(sizePolicy)
         self.sunDistance_Slider.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgba(255, 255, 255, 0);")
-        self.sunDistance_Slider.setMaximum(360)
-        self.sunDistance_Slider.setSingleStep(10)
+        self.sunDistance_Slider.setMinimum(1)
+        self.sunDistance_Slider.setMaximum(20)
+        self.sunDistance_Slider.setSingleStep(1)
         self.sunDistance_Slider.setOrientation(QtCore.Qt.Horizontal)
         self.sunDistance_Slider.setTickInterval(0)
         self.sunDistance_Slider.setObjectName("sunDistance_Slider")
@@ -253,7 +254,8 @@ class Ui_MainWindow(object):
         self.sunDistance_SpinBox = QtWidgets.QSpinBox(self.centralwidget)
         self.sunDistance_SpinBox.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgba(255, 255, 255, 255);")
-        self.sunDistance_SpinBox.setMaximum(100)
+        self.sunDistance_SpinBox.setMinimum(1)
+        self.sunDistance_SpinBox.setMaximum(20)
         self.sunDistance_SpinBox.setObjectName("sunDistance_SpinBox")
         self.horizontalLayout_9.addWidget(self.sunDistance_SpinBox)
         self.verticalLayout_3.addLayout(self.horizontalLayout_9)
