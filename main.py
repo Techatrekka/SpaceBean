@@ -109,7 +109,9 @@ class Model:
                 self.screenshot(i)
 
             plt.plot(self.x, self.y)
-            plt.show()
+            if os.path.isfile("plot.png"):
+                os.replace("plot.png", "oldplot.png")
+            plt.savefig("plot.png")
             self.isRunning = 0
 
     def roll(self, x, y, z):
