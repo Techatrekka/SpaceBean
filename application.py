@@ -61,6 +61,11 @@ class simulation(QMainWindow):
         objectRotateZ = self.ui.zObjectRotation_SpinBox.value()
         objectRotations = [objectRotateX, objectRotateY, objectRotateZ]
         self.scene.start(360, objectRotations)
+        self.resetScene()
+
+    def resetScene(self):
+        self.scene.resetActor()
+        self.updateScale()
 
     def updateScale(self):
         scaleX = self.ui.xObjectScale_SpinBox.value()

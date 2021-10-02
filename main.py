@@ -11,7 +11,8 @@ class Model:
         self.renWin = renWin
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
-        self.actor = self.fileToActor("bennuAsteroid.STL")
+        self.filename = "bennuAsteroid.STL"
+        self.actor = self.fileToActor(self.filename)
         self.isRunning = 0
 
         self.sun = self.createLightSource(10, 10, 10)
@@ -67,6 +68,10 @@ class Model:
         # Apply new rotations
         self.actor.SetUserTransform(transform)
 
+    def resetActor(self):
+        self.ren.RemoveActor(self.actor)
+        self.actor = self.fileToActor(self.filename)
+        self.ren.AddActor(self.actor)
 
     def updateLightPosition(self, x, y, z):
         self.sun.SetPosition(x, y, z)
