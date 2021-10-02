@@ -94,10 +94,10 @@ class Model:
         w2if.SetInput(self.renWin)
         w2if.Update()
 
-        filename = 'screenshot.png'
+        filename = './images/screenshot.png'
         if count < 361:
             if count % 36 == 0:
-                filename = 'Face' + str(int(count / 36)) + ".png"
+                filename = './images/Face' + str(int(count / 36)) + ".png"
 
         # Generate and write the image
         writer = vtk.vtkPNGWriter()
