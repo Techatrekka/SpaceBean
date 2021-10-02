@@ -1,6 +1,6 @@
 from astropy import units as u
 from astropy.time import Time, TimeDelta
-from poliastro.bodies import Earth, Jupiter, Sun
+from poliastro.bodies import Earth, Sun
 from poliastro.twobody import Orbit
 from poliastro.threebody import restricted
 from poliastro.ephem import Ephem
@@ -51,8 +51,8 @@ class OrbitClass:
         ax = plt.gca()
         ax.get_legend().remove()
         #plt.savefig("OrbitPol_%s.png"%(str(i).zfill(8)))
-        plt.render_plot().savefig("OrbitPol")
-        return
+        #plt.savefig("OrbitPol")
+        return plt
         
         
     def get_angle(self):
@@ -85,9 +85,9 @@ class OrbitClass:
 def test_code():
     x = OrbitClass()
     x.set_earth()
-    x.set_asteroid(phase=1.5*np.pi)
+    x.set_asteroid(phase=90)
     print(x.get_angle())
     print(x.get_sun_coords())
-    x.render_plot().savefig("OrbitPol_%s.png"%(str(1).zfill(8)))
+    x.render_plot()
 
 #test_code()
