@@ -6,9 +6,8 @@ import os
 
 
 class Model:
-    def __init__(self):
-        self.ren = vtk.vtkRenderer()
-        self.renWin = vtk.vtkRenderWindow()
+    def __init__(self, ren):
+        self.ren = ren
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
         self.scale = 2
@@ -66,19 +65,12 @@ class Model:
         camera.SetPosition(-5, 5, 5)
 
     def render(self):
-        # Create a rendering window and renderer
-        self.renWin.AddRenderer(self.ren)
-        self.renWin.SetWindowName('ReadSTL')
-
         # Assign actor to the renderer
         self.ren.AddActor(self.actor)
         self.ren.SetBackground(self.colors.GetColor3d('Black'))
 
         # Add an external light ("The sun")
         self.ren.AddLight(self.sun)
-
-        # Render scene
-        self.renWin.Render()
 
     def start(self, num_iterations, x, y, z):
         for i in range(num_iterations):
@@ -136,9 +128,3 @@ class Model:
             brightness += ratio * (-scale + index)
 
         return 1 if brightness == 255 else brightness / scale
-
-
-
-scene = Model()
-scene.render()
-scene.start(360, 2, 1, 3)

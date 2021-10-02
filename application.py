@@ -11,11 +11,20 @@ from PyQt5.QtCore import QTimer
 
 from vtk.qt.QVTKRenderWindowInteractor import QVTKRenderWindowInteractor
 
-# import Opencv module
-import cv2
-
+from main import *
 from mainMenu import *
 from simulation import *
+
+sys._excepthook = sys.excepthook
+
+
+def exception_hook(exctype, value, traceback):
+    print(exctype, value, traceback)
+    sys._excepthook(exctype, value, traceback)
+    sys.exit(1)
+
+
+sys.excepthook = exception_hook
 
 class simulation(QMainWindow):
     # class constructor
@@ -35,21 +44,9 @@ class simulation(QMainWindow):
 ##########################################################################################################
         #This part can be deleted to put in our VTK code 
 
-        reader = vtk.vtkSTLReader()
+        scene = Model(self.ren)
+        scene.render()
 
-        reader.SetFileName("bennuAsteroid.STL")
-
-        # Create a mapper
-        mapper = vtk.vtkPolyDataMapper()
-        mapper.SetInputConnection(reader.GetOutputPort())
-
-        # Create an actor
-        actor = vtk.vtkActor()
-        actor.SetMapper(mapper)
-
-        self.ren.AddActor(actor)
-
-        self.ren.ResetCamera()
 ########################################################################################################
         self.show()
         self.iren.Initialize()
