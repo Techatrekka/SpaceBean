@@ -108,11 +108,10 @@ class Model:
         image = Image.open(filename)
         self.y.append(self.calculate_brightness(image))
         self.x.append(count)
-
-        name = 'Face' + str(count) + '.png'
+        faceNum = int(count /36)
+        name = 'Face' + str(faceNum) + '.png'
         if count < 361:
             if count % 36 == 0:
-                print("works")
                 os.replace(filename, name)
 
     @staticmethod
@@ -131,5 +130,5 @@ class Model:
 
 scene = Model()
 scene.render()
-scene.start(360, 8, 1, 3)
+scene.start(360, 2, 1, 3)
 
