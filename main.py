@@ -20,6 +20,8 @@ class Model:
 
         self.x = []
         self.y = []
+        self.oldx = []
+        self.oldy = []
 
     def fileToActor(self, filename):
         # Create file reader
@@ -69,7 +71,7 @@ class Model:
         self.actor.SetUserTransform(transform)
 
     def updateEarth(self, input):
-        self.updateCameraPosition(-7,7,input)
+        self.updateCameraPosition(-7, 7, input)
 
     def updateSunRotation(self, input):
         pass
@@ -99,20 +101,29 @@ class Model:
         self.ren.AddLight(self.sun)
 
     def start(self, num_iterations, objectRotations):
+        self.x = []
+        self.y = []
         if self.isRunning == 0:
-            self.x = []
-            self.y = []
             self.isRunning = 1
             for i in range(num_iterations):
                 self.roll(objectRotations[0], objectRotations[1], objectRotations[2])
                 self.renWin.Render()
                 self.screenshot(i)
 
-            plt.plot(self.x, self.y)
-            if os.path.isfile("plot.png"):
-                os.replace("plot.png", "oldplot.png")
-            plt.savefig("plot.png")
+            plt.plot(self.x, self.y, label="Current")
+            if self.oldx:
+                plt.plot(self.oldx, self.oldy, label="Previous")
+
+            plt.title("Light Curve")
+            plt.xlabel("X Axis?")
+            plt.ylabel("Y Axis?")
+            plt.legend()
+            plt.savefig("plot.png", bbox_inches="tight")
             plt.clf()
+
+            self.oldx = self.x
+            self.oldy = self.y
+
             self.isRunning = 0
 
     def roll(self, x, y, z):
@@ -148,7 +159,6 @@ class Model:
         image = Image.open(filename)
         self.y.append(self.calculate_brightness(image))
         self.x.append(count)
-
 
     @staticmethod
     def calculate_brightness(image):
