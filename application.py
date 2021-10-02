@@ -45,27 +45,27 @@ class simulation(QMainWindow):
         self.scene.render()
         self.ui.startSimulation_Button.clicked.connect(self.startScene)
 
-        self.ui.xScale_SpinBox.valueChanged.connect(self.updateScale)
-        self.ui.yScale_SpinBox.valueChanged.connect(self.updateScale)
-        self.ui.zScale_SpinBox.valueChanged.connect(self.updateScale)
+        self.ui.xObjectScale_SpinBox.valueChanged.connect(self.updateScale)
+        self.ui.yObjectScale_SpinBox.valueChanged.connect(self.updateScale)
+        self.ui.zObjectScale_SpinBox.valueChanged.connect(self.updateScale)
 
         self.show()
         self.iren.Initialize()
         self.iren.Disable()
-        self.ui.zScale_SpinBox
+        self.ui.zObjectScale_SpinBox
 
         # List of products the user can select from
     def startScene(self):
-        objectRotateX = 1
-        objectRotateY = 0
-        objectRotateZ = 0
+        objectRotateX = self.ui.xObjectRotation_SpinBox.value()
+        objectRotateY = self.ui.yObjectRotation_SpinBox.value()
+        objectRotateZ = self.ui.zObjectRotation_SpinBox.value()
         objectRotations = [objectRotateX, objectRotateY, objectRotateZ]
         self.scene.start(360, objectRotations)
 
     def updateScale(self):
-        scaleX = self.ui.xScale_SpinBox.value()
-        scaleY = self.ui.yScale_SpinBox.value()
-        scaleZ = self.ui.zScale_SpinBox.value()
+        scaleX = self.ui.xObjectScale_SpinBox.value()
+        scaleY = self.ui.yObjectScale_SpinBox.value()
+        scaleZ = self.ui.zObjectScale_SpinBox.value()
         objectScale = [scaleX, scaleY, scaleZ]
         self.scene.updateScale(objectScale)
         self.vtkWidget.GetRenderWindow().Render()
