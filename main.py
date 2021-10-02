@@ -108,11 +108,7 @@ class Model:
         image = Image.open(filename)
         self.y.append(self.calculate_brightness(image))
         self.x.append(count)
-        faceNum = int(count /36)
-        name = 'Face' + str(faceNum) + '.png'
-        if count < 361:
-            if count % 36 == 0:
-                os.replace(filename, name)
+
 
     @staticmethod
     def calculate_brightness(image):
