@@ -69,13 +69,13 @@ class Model:
         self.actor.SetUserTransform(transform)
 
     def updateEarth(self, input):
-        pass
+        self.updateCameraPosition(-7,7,input)
 
     def updateSunRotation(self, input):
         pass
 
     def updateSunDistance(self, input):
-        pass
+        self.updateLightPosition(input, input, input)
 
     def resetActor(self):
         self.ren.RemoveActor(self.actor)
