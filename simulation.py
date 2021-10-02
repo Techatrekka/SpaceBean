@@ -283,12 +283,16 @@ class Ui_MainWindow(object):
         self.earthDistance_Slider.setSizePolicy(sizePolicy)
         self.earthDistance_Slider.setStyleSheet("color: rgb(255, 255, 255);\n"
 "background-color: rgba(255, 255, 255, 0);")
+        self.earthDistance_Slider.setMinimum(1)
+        self.earthDistance_Slider.setMaximum(100)
+        self.earthDistance_Slider.setSingleStep(5)
         self.earthDistance_Slider.setOrientation(QtCore.Qt.Horizontal)
         self.earthDistance_Slider.setObjectName("earthDistance_Slider")
         self.horizontalLayout_12.addWidget(self.earthDistance_Slider)
         self.earthDistance_ComboBox = QtWidgets.QSpinBox(self.centralwidget)
         self.earthDistance_ComboBox.setStyleSheet("color: rgb(0, 0, 0);\n"
 "background-color: rgba(255, 255, 255, 255);")
+        self.earthDistance_ComboBox.setMinimum(1)
         self.earthDistance_ComboBox.setMaximum(100)
         self.earthDistance_ComboBox.setObjectName("earthDistance_ComboBox")
         self.horizontalLayout_12.addWidget(self.earthDistance_ComboBox)
