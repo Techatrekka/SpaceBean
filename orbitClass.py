@@ -18,11 +18,11 @@ class OrbitClass:
     C_DEFAULT_RADIUS = 5.086436440527615
     C_DEFAULT_ANGLE = 0
     EPOCH = Time("2021-10-02 15:00", scale="tdb")
-    
     def __init__(self):
         self.set_asteroid()
         self.set_earth()
-
+        self.plotter = StaticOrbitPlotter()
+        self.plotter.set_attractor(Sun)
     #function to create an asteroid with
     def set_asteroid(self,radius=C_DEFAULT_RADIUS,phase=0):
         semiMaj = radius*u.AU
@@ -42,12 +42,10 @@ class OrbitClass:
 
     def render_plot(self):
 
-        plotter = StaticOrbitPlotter()
-        plotter.set_attractor(Sun)
         #plotter.set_body_frame(Jupiter)
-
-        plotter.plot(self.asteroid, color="#A32")
-        plotter.plot(self.EarOrb, color ="#00C")
+        plt.cla()
+        self.plotter.plot(self.asteroid, color="#A32")
+        self.plotter.plot(self.EarOrb, color ="#00C")
 
         ax = plt.gca()
         ax.get_legend().remove()
