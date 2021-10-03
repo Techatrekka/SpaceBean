@@ -173,11 +173,9 @@ class mainMenu(QWidget):
     def startSim(self):
         # open Main window
         if self.ui.comboBox.currentText() == "Bennu Asteroid":
-            self.stlDir = "bennuAsteroid.STL"
-        elif self.ui.comboBox.currentText() == "Block Island Asteroid":
-            self.stlDir = "blockIsland.stl"
-        elif self.ui.comboBox.currentText() == "Demitri":
-            self.stlDir = "demitri.obj"
+            self.stlDir = "bennuAsteroid.stl"
+        elif self.ui.comboBox.currentText() == "Geographos":
+            self.stlDir = "geographos.stl"
 
         self.dialog = simulation(self.stlDir)
         self.close()

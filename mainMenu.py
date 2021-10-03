@@ -59,11 +59,12 @@ class Ui_Form(object):
         font.setFamily("Corbel")
         font.setPointSize(10)
         self.comboBox.setFont(font)
-        self.comboBox.setStyleSheet("color: rgb(255, 255, 255);\n"
-"background-color: rgb(185, 185, 185);\n"
-"border: 1px solid gray;\n"
-"      border-radius: 3px;")
+        self.comboBox.setStyleSheet("color: rgb(0, 0, 0);\n"
+                                    "background-color: rgb(255, 255, 255);\n"
+                                    "border: 1px solid gray;\n"
+                                    "border-radius: 3px;")
         self.comboBox.setObjectName("comboBox")
+        self.comboBox.addItem("")
         self.comboBox.addItem("")
         self.horizontalLayout.addWidget(self.comboBox)
         self.verticalLayout.addLayout(self.horizontalLayout)
@@ -200,6 +201,7 @@ class Ui_Form(object):
         self.label.setText(_translate("Form", "Light Curve Visualiser"))
         self.label_2.setText(_translate("Form", "Choose object shape"))
         self.comboBox.setItemText(0, _translate("Form", "Bennu Asteroid"))
+        self.comboBox.setItemText(1, _translate("Form", "Geographos"))
         self.startSim_Button.setText(_translate("Form", "Start Simulation"))
         self.importSTL_Button.setText(_translate("Form", "Import Custom STL"))
         self.startCustomSim_Button.setText(_translate("Form", "Start Custom Simulation"))
