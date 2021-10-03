@@ -44,7 +44,7 @@ class OrbitClass:
     def render_plot(self):
 
         #plotter.set_body_frame(Jupiter)
-        plt.cla()
+        #plt.cla()
         self.plotter = StaticOrbitPlotter()
         self.plotter.set_attractor(Sun)
         self.plotter.plot(self.asteroid, color="#A32")
