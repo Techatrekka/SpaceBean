@@ -123,10 +123,18 @@ class simulation(QMainWindow):
     def updateSunRotationCombo(self):
         self.ui.xSunRotation_Slider.setValue(self.ui.xSunRotation_Slider.value())
         plot = self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        if not self.added:
+            self.ui.verticalLayout_6.addWidget(plot)
+            self.added = 1
+        plot.draw()
 
     def updateSunRotationSlider(self):
         self.ui.xSunRotation_SpinBox.setValue(self.ui.xSunRotation_Slider.value())
         plot = self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        if not self.added:
+            self.ui.verticalLayout_6.addWidget(plot, "plot")
+            self.added = 1
+        plot.draw()
 
 # This class opens the Setup Screen where users can change their save directory
 class mainMenu(QWidget):
