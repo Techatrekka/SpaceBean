@@ -133,8 +133,8 @@ class Model:
                 plt.plot(self.oldx, self.oldy, label="Previous")
 
             plt.title("Light Curve")
-            plt.xlabel("Rotational Phase (Degrees)")
-            plt.ylabel("Magnitude from arbitrary 0")
+            plt.xlabel("X Axis?")
+            plt.ylabel("Y Axis?")
             plt.legend()
             plt.savefig("plot.png", bbox_inches="tight")
             plt.clf()
