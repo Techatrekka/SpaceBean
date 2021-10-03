@@ -22,8 +22,6 @@ class OrbitClass:
     def __init__(self):
         self.set_asteroid()
 
-        self.plotter = StaticOrbitPlotter()
-        self.plotter.set_attractor(Sun)
     #function to create an asteroid with
     def set_asteroid(self,radius=C_DEFAULT_RADIUS,phase=0):
         semiMaj = radius*u.AU
@@ -43,16 +41,17 @@ class OrbitClass:
 
     def render_plot(self):
 
+        plotter = StaticOrbitPlotter()
+        plotter.set_attractor(Sun)
         #plotter.set_body_frame(Jupiter)
 
-        self.plotter.plot(self.asteroid, color="#A32")
-        self.plotter.plot(self.EarOrb, color ="#00C")
+        plotter.plot(self.asteroid, color="#A32")
+        plotter.plot(self.EarOrb, color ="#00C")
 
         ax = plt.gca()
         ax.get_legend().remove()
         #plt.savefig("OrbitPol_%s.png"%(str(i).zfill(8)))
         #plt.savefig("OrbitPol")
-        
         return plt
         
         
@@ -89,13 +88,6 @@ def test_code():
     x.set_asteroid(phase=90)
     print(x.get_angle())
     print(x.get_sun_coords())
-    y = x.render_plot()
-    y.savefig("test")
-    y.cla()
-    print("a")
-    x.set_asteroid(phase=60)
-    y = x.render_plot()
-    y.savefig("test1")
-    y.cla()
-    print("b")
+    x.render_plot()
+
 #test_code()
