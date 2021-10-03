@@ -23,6 +23,7 @@ class OrbitClass:
         self.set_earth()
         self.plotter = StaticOrbitPlotter()
         self.plotter.set_attractor(Sun)
+        self.render_plot()
     #function to create an asteroid with
     def set_asteroid(self,radius=C_DEFAULT_RADIUS,phase=0):
         semiMaj = radius*u.AU
