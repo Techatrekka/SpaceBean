@@ -15,7 +15,7 @@ import numpy as np
 
 class OrbitClass:
     
-    C_DEFAULT_RADIUS = 5.086436440527615
+    C_DEFAULT_RADIUS = 1
     C_DEFAULT_ANGLE = 0
     EPOCH = Time("2021-10-02 15:00", scale="tdb")
     def __init__(self):
@@ -45,12 +45,15 @@ class OrbitClass:
 
         #plotter.set_body_frame(Jupiter)
         plt.cla()
+        self.plotter = StaticOrbitPlotter()
+        self.plotter.set_attractor(Sun)
         self.plotter.plot(self.asteroid, color="#A32")
         self.plotter.plot(self.EarOrb, color ="#00C")
 
         ax = plt.gca()
         ax.get_legend().remove()
         plt.savefig("OrbitPol.png", bbox_inches="tight")
+        plt.close()
         #plt.render_plot().savefig("OrbitPol")
         return
         
@@ -72,7 +75,7 @@ class OrbitClass:
         for i in range(0,2):
             AstDot += AstPos[0][i] * DiffVec[i]
         cosIn = AstDot/(norm(AstPos[0])*norm(DiffVec))
-        angle = -1*chirality*np.arccos(cosIn) 
+        angle = chirality*np.arccos(cosIn)
         
 
         return angle.value

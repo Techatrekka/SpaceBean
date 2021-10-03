@@ -70,6 +70,8 @@ class simulation(QMainWindow):
         self.ui.xSunRotation_Slider.setMaximum(360)
         self.ui.xSunRotation_Slider.setMinimum(1)
 
+        self.updateOrbit()
+
         self.show()
         self.iren.Initialize()
         self.iren.Disable()

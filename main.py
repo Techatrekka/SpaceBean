@@ -127,17 +127,18 @@ class Model:
                 self.roll(objectRotations[0], objectRotations[1], objectRotations[2])
                 self.renWin.Render()
                 self.screenshot(i)
-
+            plt.clf()
             plt.plot(self.x, self.y, label="Current")
             if self.oldx:
                 plt.plot(self.oldx, self.oldy, label="Previous")
 
             plt.title("Light Curve")
-            plt.xlabel("X Axis?")
-            plt.ylabel("Y Axis?")
+            plt.xlabel("Rotational Phase (Degrees)")
+            plt.ylabel("Magnitude from arbitrary 0")
             plt.legend()
             plt.savefig("plot.png", bbox_inches="tight")
             plt.clf()
+            plt.close()
 
             self.oldx = self.x
             self.oldy = self.y
