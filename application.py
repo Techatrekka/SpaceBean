@@ -140,6 +140,10 @@ class mainMenu(QWidget):
         self.ui.startSim_Button.clicked.connect(self.startSim)
         self.ui.startCustomSim_Button.clicked.connect(self.startCustomSim)
         self.stlDir = ""
+        pixmap = QPixmap("./images/logo.jpg")
+        self.ui.label_4.setPixmap(pixmap)
+        pixmap = QPixmap("./images/Space_App_Logo_Black_1.jpeg")
+        self.ui.label_5.setPixmap(pixmap)
 
         self.show()
 
