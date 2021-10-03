@@ -17,6 +17,9 @@ class Model:
         self.actor = self.fileToActor(self.filename)
         self.isRunning = 0
 
+        self.radius = 1
+        self.phase = 1
+
         self.sun = self.createLightSource(10, 10, 10)
         self.updateCameraPosition(20, 0, 0)
 
@@ -80,15 +83,19 @@ class Model:
         self.renWin.Render()
 
     def updateSunRotation(self, input):
-        self.orbiter.set_asteroid(phase=input, radius=1)
+        self.phase = input
+        self.orbiter.set_asteroid(phase=self.phase, radius=self.radius)
+        sunCoords = self.orbiter.get_sun_coords()
+        self.updateLightPosition(sunCoords[0], sunCoords[1], sunCoords[2])
+        self.orbiter.render_plot()
+        self.renWin.Render()
+
+    def updateSunDistance(self, input):
+        self.radius = input
+        self.orbiter.set_asteroid(phase=self.phase, radius=self.radius)
         sunCoords = self.orbiter.get_sun_coords()
         self.updateLightPosition(sunCoords[0], sunCoords[1], sunCoords[2])
         self.renWin.Render()
-
-        return self.orbiter.render_plot()
-
-    def updateSunDistance(self):
-        pass
 
     def resetActor(self):
         self.ren.RemoveActor(self.actor)
