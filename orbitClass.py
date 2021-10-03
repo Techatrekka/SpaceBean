@@ -24,6 +24,10 @@ class OrbitClass:
 
         self.plotter = StaticOrbitPlotter()
         self.plotter.set_attractor(Sun)
+        plt.gcf().set_size_inches(1, 1)
+        plt.gca().xaxis.set_major_locator(plt.NullLocator())
+        plt.gca().yaxis.set_major_locator(plt.NullLocator())
+
     #function to create an asteroid with
     def set_asteroid(self,radius=C_DEFAULT_RADIUS,phase=0):
         semiMaj = radius*u.AU
@@ -42,18 +46,16 @@ class OrbitClass:
         return
 
     def render_plot(self):
-
-        #plotter.set_body_frame(Jupiter)
+        plt.cla()
+        plt.gcf().set_size_inches(2, 2)
+        plt.axis('off')
 
         self.plotter.plot(self.asteroid, color="#A32")
         self.plotter.plot(self.EarOrb, color ="#00C")
 
         ax = plt.gca()
         ax.get_legend().remove()
-        #plt.savefig("OrbitPol_%s.png"%(str(i).zfill(8)))
-        #plt.savefig("OrbitPol")
-        
-        return plt
+        return ax.figure.canvas
         
         
     def get_angle(self):
@@ -73,7 +75,7 @@ class OrbitClass:
         for i in range(0,2):
             AstDot += AstPos[0][i] * DiffVec[i]
         cosIn = AstDot/(norm(AstPos[0])*norm(DiffVec))
-        angle = -1*chirality*np.arccos(cosIn) 
+        angle = -1*chirality*np.arccos(cosIn)
         
 
         return angle.value

@@ -55,6 +55,7 @@ class simulation(QMainWindow):
         self.ui.xObjectScale_SpinBox.setValue(1)
         self.ui.yObjectScale_SpinBox.setValue(1)
         self.ui.zObjectScale_SpinBox.setValue(1)
+        self.added = 0
 
         self.ui.earthDistance_Slider.valueChanged.connect(self.updateEarthControlsSlider)
         self.ui.earthDistance_ComboBox.valueChanged.connect(self.updateEarthControlsCombo)
@@ -91,9 +92,6 @@ class simulation(QMainWindow):
         pixmap = QtGui.QPixmap("plot.png")
         self.ui.currentLight_Label.setPixmap(pixmap)
 
-        pixmap = QtGui.QPixmap("oldplot.png")
-        self.ui.previousLight_Label.setPixmap(pixmap)
-
     def resetScene(self):
         self.scene.resetActor()
         self.updateScale()
@@ -124,11 +122,19 @@ class simulation(QMainWindow):
 
     def updateSunRotationCombo(self):
         self.ui.xSunRotation_Slider.setValue(self.ui.xSunRotation_Slider.value())
-        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        plot = self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        if not self.added:
+            self.ui.verticalLayout_6.addWidget(plot)
+            self.added = 1
+        plot.draw()
 
     def updateSunRotationSlider(self):
         self.ui.xSunRotation_SpinBox.setValue(self.ui.xSunRotation_Slider.value())
-        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        plot = self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        if not self.added:
+            self.ui.verticalLayout_6.addWidget(plot, "plot")
+            self.added = 1
+        plot.draw()
 
 # This class opens the Setup Screen where users can change their save directory
 class mainMenu(QWidget):

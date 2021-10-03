@@ -2,7 +2,9 @@ import time
 import vtk
 from PIL import Image
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 import os
+from orbitClass import *
 
 
 class Model:
@@ -16,7 +18,10 @@ class Model:
         self.isRunning = 0
 
         self.sun = self.createLightSource(10, 10, 10)
-        self.updateCameraPosition(-7, 7, 7)
+        self.updateCameraPosition(20, 0, 0)
+
+        self.orbiter = OrbitClass()
+        self.orbiter.set_earth()
 
         self.x = []
         self.y = []
@@ -71,13 +76,19 @@ class Model:
         self.actor.SetUserTransform(transform)
 
     def updateEarth(self, input):
-        self.updateCameraPosition(-7, 7, input)
+        self.updateCameraPosition(input, 0, 0)
+        self.renWin.Render()
 
     def updateSunRotation(self, input):
-        pass
+        self.orbiter.set_asteroid(phase=input, radius=1)
+        sunCoords = self.orbiter.get_sun_coords()
+        self.updateLightPosition(sunCoords[0], sunCoords[1], sunCoords[2])
+        self.renWin.Render()
 
-    def updateSunDistance(self, input):
-        self.updateLightPosition(input, input, input)
+        return self.orbiter.render_plot()
+
+    def updateSunDistance(self):
+        pass
 
     def resetActor(self):
         self.ren.RemoveActor(self.actor)
