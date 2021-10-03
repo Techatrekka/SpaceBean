@@ -29,11 +29,12 @@ sys.excepthook = exception_hook
 
 class simulation(QMainWindow):
     # class constructor
-    def __init__(self):
+    def __init__(self, stlDir):
         # call QWidget constructor
         super().__init__()
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.stlDir = stlDir
 
         self.vtkWidget = QVTKRenderWindowInteractor(self)
         self.ui.vtkMainLayout.addWidget(self.vtkWidget)
@@ -42,7 +43,7 @@ class simulation(QMainWindow):
         self.vtkWidget.GetRenderWindow().AddRenderer(self.ren)
         self.iren = self.vtkWidget.GetRenderWindow().GetInteractor()
 
-        self.scene = Model(self.ren, self.vtkWidget.GetRenderWindow())
+        self.scene = Model(self.ren, self.vtkWidget.GetRenderWindow(), self.stlDir)
         self.scene.render()
         self.ui.startSimulation_Button.clicked.connect(self.startScene)
 
@@ -91,9 +92,6 @@ class simulation(QMainWindow):
         pixmap = QtGui.QPixmap("plot.png")
         self.ui.currentLight_Label.setPixmap(pixmap)
 
-        pixmap = QtGui.QPixmap("oldplot.png")
-        self.ui.previousLight_Label.setPixmap(pixmap)
-
     def resetScene(self):
         self.scene.resetActor()
         self.updateScale()
@@ -123,12 +121,12 @@ class simulation(QMainWindow):
         self.scene.updateSunDistance(self.ui.sunDistance_SpinBox.value())
 
     def updateSunRotationCombo(self):
-        self.ui.xSunRotation_Slider.setValue(self.ui.xSunRotation_Slider.value())
-        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        self.ui.xSunRotation_Slider.setValue(self.ui.xSunRotation_SpinBox.value())
+        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value() - 1)
 
     def updateSunRotationSlider(self):
         self.ui.xSunRotation_SpinBox.setValue(self.ui.xSunRotation_Slider.value())
-        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value())
+        self.scene.updateSunRotation(self.ui.xSunRotation_Slider.value() - 1)
 
 # This class opens the Setup Screen where users can change their save directory
 class mainMenu(QWidget):
@@ -140,19 +138,34 @@ class mainMenu(QWidget):
         #Setup Env file for to be read into line edit
         self.ui.importSTL_Button.clicked.connect(self.folderBrowser)
         self.ui.startSim_Button.clicked.connect(self.startSim)
+        self.ui.startCustomSim_Button.clicked.connect(self.startCustomSim)
+        self.stlDir = ""
 
         self.show()
-    
+
     def folderBrowser(self):
-        dir = QFileDialog.getOpenFileName(self,'Select Save Directory', 'C:\\users')
-        self.ui.stlDir_LinerEdit.setText(dir[0])  
-            
+        dir = QFileDialog.getOpenFileName(self, 'Select Save Directory', 'C:\\users')
+        self.ui.stlDir_LinerEdit.setText(dir[0])
+        self.stlDir = dir[0]
+
     def startSim(self):
-        #open Main window
-        print (self.ui.comboBox.currentText())
-        self.dialog = simulation()
+        # open Main window
+        if self.ui.comboBox.currentText() == "Bennu Asteroid":
+            self.stlDir = "bennuAsteroid.STL"
+        elif self.ui.comboBox.currentText() == "Block Island Asteroid":
+            self.stlDir = "blockIsland.stl"
+        elif self.ui.comboBox.currentText() == "Demitri":
+            self.stlDir = "demitri.obj"
+
+        self.dialog = simulation(self.stlDir)
         self.dialog.show()
 
+    def startCustomSim(self):
+        # open Main window
+        if (self.ui.stlDir_LinerEdit.text()):
+            self.stlDir = self.ui.stlDir_LinerEdit.text()
+            self.dialog = simulation(self.stlDir)
+            self.dialog.show()
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

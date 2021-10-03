@@ -3,20 +3,26 @@ import vtk
 from PIL import Image
 import matplotlib.pyplot as plt
 import os
+from orbitClass import *
 
 
 class Model:
-    def __init__(self, ren, renWin):
+    def __init__(self, ren, renWin, fileName):
         self.ren = ren
         self.renWin = renWin
         self.screenshot_count = 0
         self.colors = vtk.vtkNamedColors()
-        self.filename = "bennuAsteroid.STL"
+        self.filename = fileName
         self.actor = self.fileToActor(self.filename)
         self.isRunning = 0
 
+        self.orbiter = OrbitClass()
+
         self.sun = self.createLightSource(10, 10, 10)
-        self.updateCameraPosition(-7, 7, 7)
+        self.updateCameraPosition(1, 0, 0)
+
+        self.phase = 1
+        self.radius = 1
 
         self.x = []
         self.y = []
@@ -71,13 +77,22 @@ class Model:
         self.actor.SetUserTransform(transform)
 
     def updateEarth(self, input):
-        self.updateCameraPosition(-7, 7, input)
+        self.updateCameraPosition(input, 0, 0)
+        self.renWin.Render()
 
     def updateSunRotation(self, input):
-        pass
+        self.phase = input
+        self.orbiter.set_asteroid(self.radius, self.phase)
+        coords = self.orbiter.get_sun_coords()
+        self.updateLightPosition(coords[0], coords[1], coords[2])
+        self.renWin.Render()
 
     def updateSunDistance(self, input):
-        self.updateLightPosition(input, input, input)
+        self.radius = input
+        self.orbiter.set_asteroid(self.radius, self.phase)
+        coords = self.orbiter.get_sun_coords()
+        self.updateLightPosition(coords[0], coords[1], coords[2])
+        self.renWin.Render()
 
     def resetActor(self):
         self.ren.RemoveActor(self.actor)

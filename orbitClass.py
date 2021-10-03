@@ -21,6 +21,7 @@ class OrbitClass:
     
     def __init__(self):
         self.set_asteroid()
+        self.set_earth()
 
     #function to create an asteroid with
     def set_asteroid(self,radius=C_DEFAULT_RADIUS,phase=0):
