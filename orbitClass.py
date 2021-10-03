@@ -51,8 +51,8 @@ class OrbitClass:
 
         ax = plt.gca()
         ax.get_legend().remove()
-        #plt.savefig("OrbitPol_%s.png"%(str(i).zfill(8)))
-        plt.render_plot().savefig("OrbitPol")
+        plt.savefig("OrbitPol.png", bbox_inches="tight")
+        #plt.render_plot().savefig("OrbitPol")
         return
         
         

@@ -36,6 +36,8 @@ class simulation(QMainWindow):
         self.ui.setupUi(self)
         self.stlDir = stlDir
 
+        self.orbiter = OrbitClass()
+
         self.vtkWidget = QVTKRenderWindowInteractor(self)
         self.ui.vtkMainLayout.addWidget(self.vtkWidget)
 
@@ -60,8 +62,10 @@ class simulation(QMainWindow):
         self.ui.earthDistance_Slider.valueChanged.connect(self.updateEarthControlsSlider)
         self.ui.earthDistance_ComboBox.valueChanged.connect(self.updateEarthControlsCombo)
         self.ui.sunDistance_Slider.valueChanged.connect(self.updateSunDistanceSlider)
+        self.ui.sunDistance_Slider.sliderReleased.connect(self.updateSunDistanceSliderReleased)
         self.ui.sunDistance_SpinBox.valueChanged.connect(self.updateSunDistanceCombo)
         self.ui.xSunRotation_Slider.valueChanged.connect(self.updateSunRotationSlider)
+        self.ui.xSunRotation_Slider.sliderReleased.connect(self.updateSunRotationComboReleased)
         self.ui.xSunRotation_SpinBox.valueChanged.connect(self.updateSunRotationCombo)
         self.ui.xSunRotation_Slider.setMaximum(360)
         self.ui.xSunRotation_Slider.setMinimum(1)
@@ -92,6 +96,10 @@ class simulation(QMainWindow):
         pixmap = QtGui.QPixmap("plot.png")
         self.ui.currentLight_Label.setPixmap(pixmap)
 
+    def updateOrbit(self):
+        pixmap = QtGui.QPixmap("OrbitPol.png")
+        self.ui.topDownImage_Label.setPixmap(pixmap)
+
     def resetScene(self):
         self.scene.resetActor()
         self.updateScale()
@@ -119,6 +127,14 @@ class simulation(QMainWindow):
     def updateSunDistanceSlider(self):
         self.ui.sunDistance_SpinBox.setValue(self.ui.sunDistance_Slider.value())
         self.scene.updateSunDistance(self.ui.sunDistance_SpinBox.value())
+
+    def updateSunDistanceSliderReleased(self):
+        self.scene.updateGraph()
+        self.updateOrbit()
+
+    def updateSunRotationComboReleased(self):
+        self.scene.updateGraph()
+        self.updateOrbit()
 
     def updateSunRotationCombo(self):
         self.ui.xSunRotation_Slider.setValue(self.ui.xSunRotation_SpinBox.value())

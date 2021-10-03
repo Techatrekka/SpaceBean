@@ -94,6 +94,9 @@ class Model:
         self.updateLightPosition(coords[0], coords[1], coords[2])
         self.renWin.Render()
 
+    def updateGraph(self):
+        self.orbiter.render_plot()
+
     def resetActor(self):
         self.ren.RemoveActor(self.actor)
         self.actor = self.fileToActor(self.filename)
