@@ -180,6 +180,7 @@ class mainMenu(QWidget):
             self.stlDir = "demitri.obj"
 
         self.dialog = simulation(self.stlDir)
+        self.close()
         self.dialog.show()
 
     def startCustomSim(self):
